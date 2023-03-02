@@ -1,0 +1,14 @@
+@startuml
+title Dapr publish gRPC API 
+hide footbox
+skinparam style strictuml
+
+participant daprd_client [
+    =daprd
+]
+
+-[#blue]> daprd_client : gRPC (localhost)
+note right: gRPC API @ 50001\n/dapr.proto.runtime.v1.Dapr/GetConfigurationAlpha1\n/dapr.proto.runtime.v1.Dapr/SubscribeConfigurationAlpha1\n/dapr.proto.runtime.v1.Dapr/UnsubscribeConfigurationAlpha1
+|||
+<[#blue]-- daprd_client
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+title Configuration via HTTP Protocol
+hide footbox
+skinparam style strictuml
+box "App-1"
+participant user_code_client [
+    =User Code
+]
+participant SDK_client [
+    =Dapr SDK
+]
+end box
+participant daprd_client [
+    =daprd
+]
+participant message_broker as "redis"
+
+user_code_client -> SDK_client : getConfiguration() / subscribeConfiguration()
+note left: storeName="name-1"\nkeys="[...]"\nmetadata="[...]"
+note right: POST http://localhost:3500/v1.0/configuration/name-1?metadata.k1=v1&metadata.k2=v2&metadata.k3=v3 \nPOST http://localhost:3500/v1.0/configuration/subscribe/name-1?metadata.k1=v1&metadata.k2=v2&metadata.k3=v3
+SDK_client -[#blue]> daprd_client : HTTP(localhost)
+note right: HTTP API @ 3500
+|||
+daprd_client -[#red]> message_broker : native protocol (remote call)
+|||
+message_broker --[#red]> daprd_client :
+SDK_client <[#blue]-- daprd_client
+user_code_client <-- SDK_client
+@enduml

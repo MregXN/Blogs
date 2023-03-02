@@ -1,0 +1,14 @@
+@startuml
+title Dapr Configuration HTTP API 
+hide footbox
+skinparam style strictuml
+
+participant daprd_client [
+    =daprd
+]
+
+-[#blue]> daprd_client : HTTP (localhost)
+note right: HTTP API @ 3500\n/v1.0/configuration/{storeName}\n/v1.0/configuration/{storeName}/subscribe\n/v1.0/configuration/{storeName}/{configurationSubscribeID}/unsubscribe
+|||
+<[#blue]-- daprd_client
+@enduml
